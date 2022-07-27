@@ -93,6 +93,7 @@ function voteImage(event){
     imageContext.removeEventListener('click', voteImage);
     resultButton.disabled = false;
     resultButton.textContent = 'Show Results';
+    resultButton.title = 'Click to Show Results';
   }else{
     fillRenderQueue();
     renderImages();
@@ -100,15 +101,64 @@ function voteImage(event){
 }
 
 function showResults(){
-  for(let i = 0; i < products.length; i++){
-    let liElem = document.createElement('li');
-    liElem.textContent = `${products[i].name} views: ${products[i].viewsReceived}, votes: ${products[i].votesReceived}`;
-    resultList.append(liElem);
-  }
   resultButton.removeEventListener('click', showResults);
+  resultButton.title = 'See Results Below';
+  renderChart();
 }
 
 // Event listeners
 
 imageContext.addEventListener('click', voteImage);
 resultButton.addEventListener('click', showResults);
+
+// Chart
+
+function renderChart(){
+  let chartContext = document.getElementById('resultChart');
+  let productNames = [];
+  let productViews = [];
+  let productVotes = [];
+
+  for (let i = 0; i < products.length; i++){
+    productNames.push(products[i].name);
+    productViews.push(products[i].viewsReceived);
+    productVotes.push(products[i].votesReceived);
+  }
+
+  let chartTemplate = {
+    type: 'bar',
+    data: {
+      labels: productNames,
+      datasets: [{
+        label: '# of Views',
+        data: productViews,
+        backgroundColor: [
+          'rgb(217, 189, 253)', // Light purple
+        ],
+        borderColor: [
+          'rgb(217, 189, 253)' // Light purple
+        ],
+        borderWidth: 1
+      },
+      {
+        label: '# of Votes',
+        data: productVotes,
+        backgroundColor: [
+          'green'
+        ],
+        borderColor: [
+          'green'
+        ],
+        borderWidth: 1
+      }]
+    },
+    options: {
+      scales: {
+        y: {
+          beginAtZero: true
+        }
+      }
+    }
+  };
+  new Chart(chartContext, chartTemplate);
+}
