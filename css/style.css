@@ -4,7 +4,7 @@ body {
   background-color: rgb(135, 250, 185);
   text-align:justify;
   font-size: 2vw;
-  color:rgb(50, 75, 61);
+  color:rgb(33, 61, 45);
   font-family: 'Orbitron', sans-serif;
 }
 
@@ -20,6 +20,11 @@ header {
   padding: 1.4%;
   text-align: center;
   background-color: rgb(189, 144, 247);
+  border: solid;
+  border-width: 6px;
+  border-color: mediumaquamarine; 
+  border-top-color: aquamarine;
+  border-left-color: aquamarine;
 }
 
 header h1{
@@ -45,6 +50,7 @@ section img{
   width: 256px;
   height: 256px;
   margin: 2%;
+  border-radius: 4%;
 }
 
 footer{
