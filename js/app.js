@@ -5,7 +5,6 @@ let voteCount = 0;
 let lastVote = 25;
 let products = [];
 let renderQueue = [];
-let renderPerPageCount = 3;
 
 // DOM
 let imageContext = document.getElementById('productImageCtx');
@@ -14,7 +13,6 @@ let img2 = document.getElementById('img2');
 let img3 = document.getElementById('img3');
 let resultButton = document.getElementById('resultButton');
 let resultList = document.getElementById('resultList');
-
 
 // Constructor
 function Product(name, picExtension = 'jpg'){
@@ -46,6 +44,8 @@ new Product('tauntaun');
 new Product('unicorn');
 new Product('water-can');
 new Product('wine-glass');
+
+// Main script
 
 fillRenderQueue();
 renderImages();
@@ -100,14 +100,15 @@ function voteImage(event){
 }
 
 function showResults(){
-  if (voteCount === lastVote){
-    for(let i = 0; i < products.length; i++){
-      let liElem = document.createElement('li');
-      liElem.textContent = `${products[i].name} Views: ${products[i].viewsReceived}, Votes: ${products[i].votesReceived}`;
-    }
-    resultButton.removeEventListener('click', showResults);
+  for(let i = 0; i < products.length; i++){
+    let liElem = document.createElement('li');
+    liElem.textContent = `${products[i].name} views: ${products[i].viewsReceived}, votes: ${products[i].votesReceived}`;
+    resultList.append(liElem);
   }
+  resultButton.removeEventListener('click', showResults);
 }
+
+// Event listeners
 
 imageContext.addEventListener('click', voteImage);
 resultButton.addEventListener('click', showResults);
