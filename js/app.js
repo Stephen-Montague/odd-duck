@@ -12,7 +12,6 @@ let img1 = document.getElementById('img1');
 let img2 = document.getElementById('img2');
 let img3 = document.getElementById('img3');
 let resultButton = document.getElementById('resultButton');
-let resultList = document.getElementById('resultList');
 
 // Constructor
 function Product(name, picExtension = 'jpg'){
@@ -24,27 +23,33 @@ function Product(name, picExtension = 'jpg'){
   products.push(this);
 }
 
-// Push to products.
-new Product('bag');
-new Product('banana');
-new Product('bathroom');
-new Product('boots');
-new Product('breakfast');
-new Product('bubblegum');
-new Product('chair');
-new Product('cthulhu');
-new Product('dog-duck');
-new Product('dragon');
-new Product('pen');
-new Product('pet-sweep');
-new Product('scissors');
-new Product('shark');
-new Product('sweep', 'png');
-new Product('tauntaun');
-new Product('unicorn');
-new Product('water-can');
-new Product('wine-glass');
+let localStorageProducts = localStorage.getItem('products');
+let parsedProducts = JSON.parse(localStorageProducts);
 
+if(localStorageProducts){
+  products = parsedProducts;
+}
+else { // Push to products.
+  new Product('bag');
+  new Product('banana');
+  new Product('bathroom');
+  new Product('boots');
+  new Product('breakfast');
+  new Product('bubblegum');
+  new Product('chair');
+  new Product('cthulhu');
+  new Product('dog-duck');
+  new Product('dragon');
+  new Product('pen');
+  new Product('pet-sweep');
+  new Product('scissors');
+  new Product('shark');
+  new Product('sweep', 'png');
+  new Product('tauntaun');
+  new Product('unicorn');
+  new Product('water-can');
+  new Product('wine-glass');
+}
 // Main script
 
 fillRenderQueue();
@@ -94,6 +99,9 @@ function voteImage(event){
     resultButton.disabled = false;
     resultButton.textContent = 'Show Results';
     resultButton.title = 'Click to Show Results';
+    let stringifiedProducts = JSON.stringify(products);
+    localStorage.setItem('products', stringifiedProducts);
+
   }else{
     fillRenderQueue();
     renderImages();
@@ -160,5 +168,5 @@ function renderChart(){
       }
     }
   };
-  new Chart(chartContext, chartTemplate);
+  new Chart(chartContext, chartTemplate); // eslint-disable-line
 }
